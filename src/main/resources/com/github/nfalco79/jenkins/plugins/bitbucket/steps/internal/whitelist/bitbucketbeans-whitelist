@@ -1,0 +1,42 @@
+method com.github.nfalco79.bitbucket.client.model.PullRequest getAuthor
+method com.github.nfalco79.bitbucket.client.model.PullRequest getClosedBy
+method com.github.nfalco79.bitbucket.client.model.PullRequest getCommentsCount
+method com.github.nfalco79.bitbucket.client.model.PullRequest getDate
+method com.github.nfalco79.bitbucket.client.model.PullRequest getDescription
+method com.github.nfalco79.bitbucket.client.model.PullRequest getDestination
+method com.github.nfalco79.bitbucket.client.model.PullRequest getId
+method com.github.nfalco79.bitbucket.client.model.PullRequest getLinks
+method com.github.nfalco79.bitbucket.client.model.PullRequest getReason
+method com.github.nfalco79.bitbucket.client.model.PullRequest getReviewers
+method com.github.nfalco79.bitbucket.client.model.PullRequest getSource
+method com.github.nfalco79.bitbucket.client.model.PullRequest getState
+method com.github.nfalco79.bitbucket.client.model.PullRequest getTaskCount
+method com.github.nfalco79.bitbucket.client.model.PullRequest getTitle
+method com.github.nfalco79.bitbucket.client.model.PullRequest getType
+method com.github.nfalco79.bitbucket.client.model.PullRequest isCloseSourceBranch
+
+method com.github.nfalco79.bitbucket.client.model.UserInfo getAccountId
+method com.github.nfalco79.bitbucket.client.model.UserInfo getDisplayName
+method com.github.nfalco79.bitbucket.client.model.UserInfo getName
+method com.github.nfalco79.bitbucket.client.model.UserInfo getNickname
+
+method com.github.nfalco79.bitbucket.client.model.BitbucketObject getKey
+method com.github.nfalco79.bitbucket.client.model.BitbucketObject getLinks
+method com.github.nfalco79.bitbucket.client.model.BitbucketObject getName
+method com.github.nfalco79.bitbucket.client.model.BitbucketObject getType
+method com.github.nfalco79.bitbucket.client.model.BitbucketObject getUUID
+
+method com.github.nfalco79.bitbucket.client.model.Commit getAuthor
+method com.github.nfalco79.bitbucket.client.model.Commit getDate
+method com.github.nfalco79.bitbucket.client.model.Commit getHash
+method com.github.nfalco79.bitbucket.client.model.Commit getLinks
+method com.github.nfalco79.bitbucket.client.model.Commit getMessage
+method com.github.nfalco79.bitbucket.client.model.Commit getParents
+method com.github.nfalco79.bitbucket.client.model.Commit getType
+
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getDetails
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getLink
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getReporter
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getResult
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getTitle
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getType
