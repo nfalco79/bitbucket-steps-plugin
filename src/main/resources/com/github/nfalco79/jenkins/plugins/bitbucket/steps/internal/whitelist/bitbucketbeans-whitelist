@@ -40,3 +40,8 @@ method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getReporter
 method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getResult
 method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getTitle
 method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getType
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getExternalId
+method com.github.nfalco79.bitbucket.client.model.CodeInsightsReport getData
+method com.github.nfalco79.bitbucket.client.model.ReportData getTitle
+method com.github.nfalco79.bitbucket.client.model.ReportData getType
+method com.github.nfalco79.bitbucket.client.model.ReportData getValue
