@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.github.nfalco79</groupId>
     <artifactId>bitbucket-steps</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>hpi</packaging>
     <name>Pipelines step for Bitbucket Cloud Plugin</name>
     <description>Steps to query details about repositories or handle team/user information in bitbucket cloud.</description>
@@ -34,7 +34,7 @@
         <url>https://github.com/nfalco79/bitbucket-steps-plugin</url>
         <connection>scm:git:git@github.com:nfalco79/bitbucket-steps-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:nfalco79/bitbucket-steps-plugin.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>bitbucket-steps-1.0.1</tag>
     </scm>
 
     <properties>
