@@ -16,6 +16,19 @@
  */
 package com.github.nfalco79.jenkins.plugins.bitbucket.steps;
 
+import com.cloudbees.plugins.credentials.CredentialsProvider;
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.github.nfalco79.bitbucket.client.BitbucketCloudClient;
+import com.github.nfalco79.bitbucket.client.Credentials;
+import com.github.nfalco79.bitbucket.client.Credentials.CredentialsBuilder;
+import com.github.nfalco79.bitbucket.client.model.PullRequest;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.Extension;
+import hudson.Util;
+import hudson.model.Failure;
+import hudson.model.Run;
+import hudson.util.FormValidation;
 import org.jenkinsci.plugins.workflow.steps.Step;
 import org.jenkinsci.plugins.workflow.steps.StepContext;
 import org.jenkinsci.plugins.workflow.steps.StepExecution;
@@ -23,20 +36,6 @@ import org.jenkinsci.plugins.workflow.steps.SynchronousStepExecution;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
-
-import com.cloudbees.plugins.credentials.CredentialsProvider;
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.github.nfalco79.bitbucket.client.BitbucketCloudClient;
-import com.github.nfalco79.bitbucket.client.Credentials;
-import com.github.nfalco79.bitbucket.client.Credentials.CredentialsBuilder;
-import com.github.nfalco79.bitbucket.client.model.PullRequest;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
-import hudson.Extension;
-import hudson.Util;
-import hudson.model.Failure;
-import hudson.model.Run;
-import hudson.util.FormValidation;
 
 public class PullRequestStep extends Step {
 
@@ -46,7 +45,7 @@ public class PullRequestStep extends Step {
     private final Integer prId;
 
     @DataBoundConstructor
-    public PullRequestStep(@NonNull String workspace, @NonNull String repository, @NonNull Integer prId) {
+    public PullRequestStep(@CheckForNull String workspace, @CheckForNull String repository, @CheckForNull Integer prId) {
         this.workspace = Util.fixEmptyAndTrim(workspace);
         if (workspace == null) {
             throw new Failure(Messages.Steps_requiredParameter("Workspace/Owner"));
@@ -89,7 +88,7 @@ public class PullRequestStep extends Step {
 
     private static class PullRequestStepExecution extends SynchronousStepExecution<PullRequest> {
         private static final long serialVersionUID = 1L;
-        private transient final PullRequestStep step;
+        private final transient PullRequestStep step;
 
         private PullRequestStepExecution(PullRequestStep step, StepContext context) {
             super(context);

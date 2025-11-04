@@ -3,7 +3,8 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.78</version>
+        <version>5.27</version>
+        <relativePath />
     </parent>
     <groupId>com.github.nfalco79</groupId>
     <artifactId>bitbucket-steps</artifactId>
@@ -11,6 +12,8 @@
     <packaging>hpi</packaging>
     <name>Pipelines step for Bitbucket Cloud Plugin</name>
     <description>Steps to query details about repositories or handle team/user information in bitbucket cloud.</description>
+    <url>https://github.com/nfalco79/${project.artifactId}-plugin</url>
+
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -27,26 +30,29 @@
     </developers>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/nfalco79/bitbucket-steps-plugin/issues</url>
+        <url>${project.url}/issues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/nfalco79/bitbucket-steps-plugin</url>
+        <url>${project.url}</url>
         <connection>scm:git:git@github.com:nfalco79/bitbucket-steps-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:nfalco79/bitbucket-steps-plugin.git</developerConnection>
-        <tag>bitbucket-steps-1.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
         <java.level>17</java.level>
-        <jenkins.version>2.440.1</jenkins.version>
-        <releaseProfiles>release</releaseProfiles>
-        <checkstyle.version>10.13.0</checkstyle.version>
+        <checkstyle.version>12.1.1</checkstyle.version>
 
-        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-        <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
-        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-        <maven-jacoco-plugin.version>0.8.11</maven-jacoco-plugin.version>
+        <jenkins.baseline>2.504</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.3</jenkins.version>
+        <releaseProfiles>release</releaseProfiles>
+        <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
+
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
+        <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
 
         <sonar.organization>nfalco79</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -64,23 +70,13 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.440.x</artifactId>
-                <version>2815.vf5d6f093b_23e</version>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>5543.vfd758c7c868d</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -91,8 +87,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>bitbucket-rest-client</artifactId>
-            <version>2.2.3</version>
+            <version>2.2.4</version>
             <exclusions>
+                <exclusion>
+                    <groupId>org.apache.httpcomponents.client5</groupId>
+                    <artifactId>httpclient5</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>com.damnhandy</groupId>
                     <artifactId>handy-uri-templates</artifactId>
@@ -106,6 +106,10 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>handy-uri-templates-2-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jenkins.plugins</groupId>
+            <artifactId>apache-httpcomponents-client-5-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -147,7 +151,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.25.2</version>
+            <version>3.27.6</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -162,6 +166,15 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.9.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>ossrh</publishingServerId>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -266,6 +279,21 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- because eclipse generate a JUnit5 run configuration with placeholder not replaced in the jvm argument section! -->
+                <surefire.forkNumber>1</surefire.forkNumber>
+                <jenkins.javaAgent />
+                <jenkins.insaneHook />
+                <jenkins.addOpens />
+            </properties>
         </profile>
     </profiles>
 </project>

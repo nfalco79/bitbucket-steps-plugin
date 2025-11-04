@@ -16,18 +16,6 @@
  */
 package com.github.nfalco79.jenkins.plugins.bitbucket.steps;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.acegisecurity.Authentication;
-import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
-import org.kohsuke.stapler.AncestorInPath;
-import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.verb.POST;
-
 import com.cloudbees.plugins.credentials.CredentialsMatcher;
 import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
@@ -37,9 +25,9 @@ import com.cloudbees.plugins.credentials.common.StandardUsernameListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
-
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.FilePath;
 import hudson.model.Item;
 import hudson.model.ItemGroup;
 import hudson.model.Queue;
@@ -50,15 +38,21 @@ import hudson.security.AccessControlled;
 import hudson.security.Permission;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
+import java.util.List;
+import java.util.Set;
 import jenkins.model.Jenkins;
+import org.acegisecurity.Authentication;
+import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.plugins.workflow.steps.StepDescriptor;
+import org.kohsuke.stapler.AncestorInPath;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.verb.POST;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractBitbucketStepDescriptor extends StepDescriptor {
     @Override
     public Set<? extends Class<?>> getRequiredContext() {
-        Set<Class<?>> context = new HashSet<>();
-        Collections.addAll(context, Run.class);
-        return Collections.unmodifiableSet(context);
+        return Set.of(Run.class, FilePath.class);
     }
 
     @POST
